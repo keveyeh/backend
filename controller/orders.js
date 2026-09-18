@@ -61,7 +61,7 @@ export const InitiatePayment = async (req, res) => {
     let type;
     let accountKey;
     
-    if(method==='MTN'){
+    if(method ==='MTN'){
         type='momo'
         accountKey = Buffer.from(`${MOMOApiKey}:${MOMOApiSecret}`).toString('base64')
     }else{
@@ -114,23 +114,19 @@ export const InitiatePayment = async (req, res) => {
             await db.query("UPDATE orders SET status='FAILED' WHERE id = ?",[order_id])
             return res.status(400).json({ message: "Payment initialization failed", detail: data.message });
         }
-        
-        if(apiStatus === "01"){
-            await db.query("UPDATE transactions SET status='SUCCESS' WHERE transaction_ref = ?",[unque_id])
-            await db.query("UPDATE orders SET status='Paid' WHERE id = ?",[order_id])
-            return res.status(200).json({
-                message: "Payment was Successful",
-                transactionId: external_id,
-                status:'SUCCESS'
-            });
-        } 
-        
+        if(apiStatus === "1000"){
+           await db.query("UPDATE transactions SET status = 'Pending' WHERE transaction_ref = ?", [unque_id]);
+            await db.query("UPDATE orders SET status='Pending' WHERE id = ?",[order_id])
+         return res.status(400).json({message:'Pending',detail:data.message})
+        }
+        if(apiStatus === "01"){        
         return res.status(200).json({
             message: "Transaction initiated successfully. Awaiting phone PIN confirmation.",
             transactionId: external_id,
             orderid:req.orderId,
             redirectUrl: data.redirectUrl || null
         });
+    }
 
     } catch (error) {
         
