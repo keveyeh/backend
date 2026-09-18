@@ -99,7 +99,7 @@ export const InitiatePayment = async (req, res) => {
                 tel: String(phone), 
                 type: String(type),
                 motif: 'to pay product',
-                callback_url: "https://shopcart-backend-jeffrey/iwomi/iwomi-callback"
+                callback_url: "https://shopcart-backend-jeffrey.onrender.com/iwomi/iwomi-callback"
 
             })
         });
