@@ -50,10 +50,10 @@ export const orderItems = async (req,res,next)=>{
 }
 
 export const InitiatePayment = async (req, res) => {
-    const MOMOApiKey = "5e016fb8-ef10-458c-80c4-442e94708eee"
-    const MOMOApiSecret = "6ef3965f-ccb9-4f70-8864-1ca1de8e7c7d"
-    const OMApiKey = "36f4b65b-bbcf-4ca6-b881-1ba76b95ac39"
-    const OMApiSecret="0cf40e83-e3eb-4bc1-9504-8d6cd3878343"
+    const MOMOApiKey = process.env.MTN_APIKEY
+    const MOMOApiSecret = process.env.MTN_APISECRET
+    const OMApiKey = process.env.ORANGE_APIKEY
+    const OMApiSecret=process.env.ORANGE_APISECRET
 
     const amount = req.body.amount
     const method = req.body.method;
@@ -99,7 +99,7 @@ export const InitiatePayment = async (req, res) => {
                 tel: String(phone), 
                 type: String(type),
                 motif: 'to pay product',
-                callback_url: "https://visibly-luckiness-punctuate.ngrok-free.dev/iwomi/iwomi-callback"
+                callback_url: "https://shopcart-backend-jeffrey/iwomi/iwomi-callback"
 
             })
         });

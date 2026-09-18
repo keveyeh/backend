@@ -9,7 +9,7 @@ import 'dotenv/config'
     database:process.env.DB_NAME,
     waitForConnections:true,
     connectionLimit:10
- }).promise()
+ }).promise();
  }catch(error){
     console.error('Database not connected',error.message)
  }
