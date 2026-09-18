@@ -133,10 +133,7 @@ export const InitiatePayment = async (req, res) => {
         });
 
     } catch (error) {
-        if(unque_id){
-             await db.query("UPDATE transactions SET status = 'FAILED' WHERE transaction_ref = ?", [unque_id]);
-             await db.query("UPDATE orders SET status='FAILED' WHERE id = ?",[order_id])
-        }
+        
         console.error("Payment Error:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
