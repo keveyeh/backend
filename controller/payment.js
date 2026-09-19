@@ -3,7 +3,9 @@
       const password = req.body.password
       if(!username || !password){
         return res.status(409).json({
-            message:'BAD REQUESTs'
+            message:'BAD REQUESTs',
+            username:username,
+            password:password
         })
       }
       const cleanUsername = String(username).trim()
