@@ -109,7 +109,7 @@ export const InitiatePayment = async (req, res) => {
         
         const apiStatus = data.status ? String(data.status).trim() : "";
 
-        if (apiStatus !== "01" && apiStatus !== "1000") {
+        /*if (apiStatus !== "01" && apiStatus !== "1000") {
             await db.query("UPDATE transactions SET status = 'FAILED' WHERE transaction_ref = ?", [unque_id]);
             await db.query("UPDATE orders SET status='FAILED' WHERE id = ?",[order_id])
             return res.status(400).json({ message: "Payment initialization failed", detail: data.message });
@@ -118,15 +118,19 @@ export const InitiatePayment = async (req, res) => {
            await db.query("UPDATE transactions SET status = 'Pending' WHERE transaction_ref = ?", [unque_id]);
             await db.query("UPDATE orders SET status='Pending' WHERE id = ?",[order_id])
          return res.status(400).json({message:'Pending',detail:data.message})
-        }
-        if(apiStatus === "01"){        
+        }  */
+       if(iwomiResponse.ok){     
         return res.status(200).json({
             message: "Transaction initiated successfully. Awaiting phone PIN confirmation.",
             transactionId: external_id,
             orderid:req.orderId,
             redirectUrl: data.redirectUrl || null
         });
-    }
+       }else{
+        return res.status(iwomiResponse.status).json({
+            message: data.message
+        })
+       }
 
     } catch (error) {
         
