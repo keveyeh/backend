@@ -8,7 +8,8 @@ import 'dotenv/config'
     password:process.env.DB_PASS,
     database:process.env.DB_NAME,
     waitForConnections:true,
-    connectionLimit:10
+    connectionLimit:10,
+    timezone: '+01:00'
  }).promise();
  }catch(error){
     console.error('Database not connected',error.message)
