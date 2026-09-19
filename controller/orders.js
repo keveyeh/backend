@@ -56,7 +56,7 @@ export const InitiatePayment = async (req, res) => {
     const OMApiSecret=process.env.ORANGE_APISECRET
 
     const amount = req.body.amount
-    const method = req.body.method;
+    const method = req.body.method
     const phone = req.body.phone
     let type;
     let accountKey;
