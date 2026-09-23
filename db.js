@@ -9,7 +9,6 @@ import 'dotenv/config'
     database:process.env.DB_NAME,
     waitForConnections:true,
     connectionLimit:10,
-    initCommand: "SET time_zone = '+01:00'"
  }).promise();
  }catch(error){
     console.error('Database not connected',error.message)

@@ -79,8 +79,8 @@ export const InitiatePayment = async (req, res) => {
         const external_id = String(unque_id)
         
         const query = `
-          INSERT INTO transactions (order_id, payment_method, phone_number, transaction_ref, status) 
-          VALUES (?, ?, ?, ?, 'PENDING')
+          INSERT INTO transactions (order_id, payment_method, phone_number, transaction_ref, status,created_at) 
+          VALUES (?, ?, ?, 'Pending',NOW() + INTERVAL 1 HOUR)
         `;
         await db.query(query, [order_id, method, phone, unque_id]);
         
@@ -140,6 +140,7 @@ export const InitiatePayment = async (req, res) => {
 };
 
 export const IwomiCallback = async (req, res) => {
+    try{
    console.log("incoming iwomi data")
   console.log(req.body)
   const {internal_id,external_id,message,status}= req.body
@@ -164,9 +165,14 @@ export const IwomiCallback = async (req, res) => {
             const sql3 = 'UPDATE transactions SET status= ? WHERE transaction_ref = ?'
             await db.execute(sql3,['Failed',external_id])
         }
-
+       
     }
-  res.sendStatus(200)
+   return  res.sendStatus(200)
+}catch(err){
+        console.log(err.message)
+        return res.sendStatus(500);
+    }
+  
     
 };
  export const checkStatus = async (req,res)=>{
