@@ -80,7 +80,7 @@ export const InitiatePayment = async (req, res) => {
         
         const query = `
           INSERT INTO transactions (order_id, payment_method, phone_number, transaction_ref, status,created_at) 
-          VALUES (?, ?, ?, 'Pending',NOW() + INTERVAL 1 HOUR)
+          VALUES (?, ?, ?,?, 'Pending',NOW() + INTERVAL 1 HOUR)
         `;
         await db.query(query, [order_id, method, phone, unque_id]);
         
